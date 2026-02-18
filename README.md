@@ -16,34 +16,21 @@ Esta skill escanea automáticamente carpetas `icons`, `librerias` o `libraries` 
 
 ## Instalación
 
-### Opción 1: Instalación directa desde npm (recomendado)
+### Opción 1: Instalación con npx (recomendado)
 
 ```bash
-npm install skill-visualizer-direct
+npx skills add JefferCB1/skill-visualizer-direct
 ```
 
-### Opción 2: Instalación desde código fuente
+### Opción 2: Instalación manual
 
 ```bash
 # Clonar el repositorio
 git clone https://github.com/JefferCB1/skill-visualizer-direct.git
-cd skill-visualizer-direct
 
-# Instalar dependencias
-npm install
-
-# Compilar TypeScript
-npm run build
-```
-
-### Opción 3: Enlace simbólico (desarrollo)
-
-```bash
-# En el directorio de la skill
-npm link
-
-# En tu proyecto opencode
-npm link skill-visualizer-direct
+# Copiar a la carpeta de skills
+mkdir -p ~/.config/opencode/skills
+cp -r skill-visualizer-direct ~/.config/opencode/skills/visualize-with-libraries
 ```
 
 ## Uso

@@ -1,5 +1,5 @@
 {
-  "name": "skill-visualizer-direct",
+  "name": "@jeffercb1/skill-visualizer-direct",
   "version": "1.0.0",
   "description": "Skill de visualización de diagramas con soporte para iconos locales",
   "main": "dist/index.js",
@@ -25,8 +25,5 @@
     "typescript": "^5.0.0",
     "@types/node": "^20.0.0",
     "@types/fs-extra": "^11.0.0"
-  },
-  "peerDependencies": {
-    "opencode": ">=1.0.0"
   }
 }
