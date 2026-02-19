@@ -42,8 +42,92 @@ Esta skill renderiza diagramas BPMN utilizando iconos de carpetas locales encont
 }
 ```
 
-### Anclaje de Texto
-- Todo texto dentro de un rectángulo o rombo debe estar vinculado usando la propiedad `boundElements` en la figura contenedora
+### Anclaje Bidireccional (Contenedores de Texto)
+
+Tienes estrictamente prohibido intentar calcular manualmente las coordenadas x e y para centrar los textos dentro de las figuras. Debes utilizar el sistema nativo de Contenedores de Excalidraw para garantizar que el texto quede perfectamente centrado y no se desborde.
+
+**En la figura contenedora (rectangle, diamond, ellipse, etc.):**
+Añade la propiedad `boundElements` con un array que contenga el ID del texto:
+
+```json
+{
+  "id": "caja_paso_1",
+  "type": "rectangle",
+  "boundElements": [{ "type": "text", "id": "texto_paso_1" }]
+}
+```
+
+**En el elemento de texto:**
+Añade la propiedad `containerId` apuntando al ID de la figura:
+
+```json
+{
+  "id": "texto_paso_1",
+  "type": "text",
+  "containerId": "caja_paso_1"
+}
+```
+
+### Auto-Alineación del Texto
+
+Todo elemento de texto dentro de un contenedor DEBE incluir:
+
+```json
+{
+  "textAlign": "center",
+  "verticalAlign": "middle"
+}
+```
+
+### Visibilidad y Estilo de las Formas
+
+Las figuras base no pueden ser transparentes ni tener bordes invisibles:
+
+```json
+{
+  "strokeColor": "#1e1e1e",
+  "backgroundColor": "transparent",
+  "fillStyle": "solid"
+}
+```
+
+### Estructura JSON Completa con Contenedor
+
+```json
+[
+  {
+    "id": "caja_paso_1",
+    "type": "rectangle",
+    "x": 100,
+    "y": 100,
+    "width": 150,
+    "height": 80,
+    "strokeColor": "#1e1e1e",
+    "backgroundColor": "transparent",
+    "fillStyle": "solid",
+    "boundElements": [{ "type": "text", "id": "texto_paso_1" }]
+  },
+  {
+    "id": "texto_paso_1",
+    "type": "text",
+    "text": "Registrar Lead",
+    "x": 100,
+    "y": 100,
+    "width": 150,
+    "height": 80,
+    "fontSize": 18,
+    "fontFamily": 5,
+    "textAlign": "center",
+    "verticalAlign": "middle",
+    "containerId": "caja_paso_1"
+  }
+]
+```
+
+**IMPORTANTE**: 
+- El texto debe tener las mismas coordenadas y dimensiones que su contenedor
+- NO uses la fórmula manual de centrado (`estimatedWidth = text.length * fontSize * 0.5`)
+- USA SIEMPRE el sistema de contenedores con `boundElements` + `containerId`
 
 ### Estructura JSON de Salida
 
@@ -52,9 +136,39 @@ Esta skill renderiza diagramas BPMN utilizando iconos de carpetas locales encont
   "type": "excalidraw",
   "version": 2,
   "elements": [
-    {"type": "rectangle", "id": "task_1", "x": 100, "y": 100, "width": 120, "height": 60},
-    {"type": "text", "id": "text_1", "x": 130, "y": 120, "content": "Recibir Email", "boundElements": [{"type": "rectangle", "id": "task_1"}]},
-    {"type": "arrow", "id": "arr_1", "startBinding": {"elementId": "task_1", "focus": 0, "gap": 5}, "endBinding": {"elementId": "task_2", "focus": 0, "gap": 5}}
+    {
+      "id": "task_1",
+      "type": "rectangle",
+      "x": 100,
+      "y": 100,
+      "width": 120,
+      "height": 60,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "boundElements": [{ "type": "text", "id": "text_1" }]
+    },
+    {
+      "id": "text_1",
+      "type": "text",
+      "text": "Recibir Email",
+      "x": 100,
+      "y": 100,
+      "width": 120,
+      "height": 60,
+      "fontSize": 16,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "task_1"
+    },
+    {
+      "id": "arr_1",
+      "type": "arrow",
+      "startBinding": {"elementId": "task_1", "focus": 0, "gap": 5},
+      "endBinding": {"elementId": "task_2", "focus": 0, "gap": 5},
+      "roundness": {"type": 2}
+    }
   ]
 }
 ```
